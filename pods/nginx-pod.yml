@@ -1,0 +1,17 @@
+# Basic example for pod definition(resources details are optional)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-nginx
+  labels:
+    name: my-nginx
+spec:
+  containers:
+  - name: my-nginx
+    image: nginx:alpine
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
