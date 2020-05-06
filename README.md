@@ -39,4 +39,18 @@ Docker Desktop would be ideal for Experimenting with k8s futures.
 
     Now I describe the pod by giving `kubectl describe pod/my-nginx` command. At the bottom, I got `Warning Unhealthy Message stating that Liveness probe failed: HTTP probe failed with statuscode: 404` and `Normal type message that it will be restarted`.
 
+## Deployments
+  Deployments are more abstract way of deploying pods and replica sets. In General, we create deployment yaml file with desired no of pods in replica sets attribute.
+  - `kubectl create -f deployments/nginx-deployment.yml --save-config` will create deployment resources.
+  - `kubectl get all` will list out all resources including pods, replicasets and deployments.
+  - `kubectl describe <pods>|<replicasets>|<deployments> nginx` should list out the requested resources and its state details.
+  - `kubectl get deployments --show-labels` will list out deployments along with label details[Though I have given my selector label app=nginx, its not showing. But describe deployments does show Labels details. This needs to be looked into]
+  - `kubectl get deployments -l app=nginx` 
+  - Deployments are highly useful for zero-downtime deployment. By default it uses *Rolling Update* strategy to bring down the older version and spin up the new version of application.
 
+  There are two new optional attributes[initailDelaySeconds and minReadySeconds] can be specified before k8s brings down the older version of pod
+    - initialDelaySeconds: Number of seconds after the container has started before liveness/readiness probes are initiated
+    - minReadySeconds: Number of seconds for which a newly created container should accept traffic/Ready for Rolling Update process.
+
+  Difference between initialDelaySeconds(ReadinessProbe) and minReadySeconds(RollingUpdate) property:
+    *Lets say container in the pod has started `t` seconds. Readiness proble will be initiated at `t+initialDelaySeconds` seconds. Assume pod become ready at t1 seconds( `t1 > t+initialDelaySeconds`). So this pod will be available after `t1+minReadySeconds` seconds to receive traffic OR considered ready for rolling update process.          
