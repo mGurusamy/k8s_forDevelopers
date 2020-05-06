@@ -1,0 +1,14 @@
+# This file contains basic elemennt of yaml file
+key: value
+complexMap:
+  key1: value
+  key2:
+    subkey: value
+items:
+  - item1
+  - item2
+itemsMap:
+  - map1: value
+    map1Prop: value
+  - map2: value 
+    map2Prop: value
