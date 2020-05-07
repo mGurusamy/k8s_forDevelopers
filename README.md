@@ -53,4 +53,21 @@ Docker Desktop would be ideal for Experimenting with k8s futures.
     - minReadySeconds: Number of seconds for which a newly created container should accept traffic/Ready for Rolling Update process.
 
   Difference between initialDelaySeconds(ReadinessProbe) and minReadySeconds(RollingUpdate) property:
-    *Lets say container in the pod has started `t` seconds. Readiness proble will be initiated at `t+initialDelaySeconds` seconds. Assume pod become ready at t1 seconds( `t1 > t+initialDelaySeconds`). So this pod will be available after `t1+minReadySeconds` seconds to receive traffic OR considered ready for rolling update process.          
+    *Lets say container in the pod has started `t` seconds. Readiness proble will be initiated at `t+initialDelaySeconds` seconds. Assume pod become ready at t1 seconds( `t1 > t+initialDelaySeconds`). So this pod will be available after `t1+minReadySeconds` seconds to receive traffic OR considered ready for rolling update process.
+
+## Services
+  Service provides a single point of entry for accessing one or more pods. Since pods are ephemeral, we can't rely on their IP. Hence we use services to access pods.
+
+  Also pods get their IP after it has been scheduled. So there is no way for clients to know pods IP address ahead of time.
+
+### List of Service Types
+  - Cluster IP
+    - Expose the service on a cluster-internal IP. This service only reachable from     with in cluster. This is default service type. since this service can be used only with in the cluster, proxy can be used to avail this service outside the cluster. 
+  - NodePort
+    - Expose the service on each Node's IP at a static port.
+  - LoadBalancer
+    - Provision an external IP to act as a load balancer for the service.Standard way to expose a service to the internet.
+  - ExternalName
+    - Maps a service to a DNS name. Allows a service to act as the proxy for an external service.
+
+  *without using services, using port-forward command we can access the cluster.*          
